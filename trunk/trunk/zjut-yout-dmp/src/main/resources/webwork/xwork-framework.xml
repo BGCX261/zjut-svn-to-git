@@ -1,0 +1,16 @@
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.1.1//EN" "http://www.opensymphony.com/xwork/xwork-1.1.1.dtd">
+
+<xwork>
+	<package name="{http://}framework"  extends="webwork-default" namespace="/framework">
+		
+		<result-types>
+            <result-type name="velocity" class="com.opensymphony.webwork.dispatcher.VelocityResult" default="true"/>
+			<result-type name="json" class="com.zjut.yout.channel.webwork.result.JSONResult"/>
+        </result-types>
+		
+		<global-exception-mappings>
+            <exception-mapping exception="java.lang.Exception" result="exception"/>
+        </global-exception-mappings>
+		
+    </package>
+</xwork>

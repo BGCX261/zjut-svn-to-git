@@ -1,0 +1,16 @@
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.1.1//EN" "http://www.opensymphony.com/xwork/xwork-1.1.1.dtd">
+<xwork>
+
+	<package name="dmp" extends="{http://}framework" namespace="/login">
+		
+		<action name="agentLogin" class="com.zjut.yout.channel.action.login.AgentLoginAction" method="agentLogin">
+			<result name="success" type="freemarker">/template/login/agentLogin.ftl</result>
+		</action>
+		
+		<action name="checkAgentLogin" class="com.zjut.yout.channel.action.login.AgentLoginAction" method="checkAgentLogin">
+			<result name="JsonResultInfo" type="json"></result>
+		</action>
+		
+	</package>
+	
+</xwork>

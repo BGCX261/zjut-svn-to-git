@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<!-- 通用属性文件定义 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:/dbconfig.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 相关数据源和事务管理的定义 -->
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName"
+			value="${webapp.sandbox.datasource.driverClassName}" />
+		<property name="url" value="${webapp.sandbox.datasource.url}" />
+		<property name="username"
+			value="${webapp.sandbox.datasource.userName}" />
+		<property name="password"
+			value="${webapp.sandbox.datasource.password}" />
+	</bean>
+
+	<!-- Transaction manager for a single JDBC DataSource -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="transactionInterceptor"
+		class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED, readOnly</prop>
+				<prop key="load*">PROPAGATION_REQUIRED, readOnly</prop>
+				<prop key="stat*">PROPAGATION_REQUIRED, readOnly</prop>
+				<prop key="find*">PROPAGATION_REQUIRED, readOnly</prop>
+				<prop key="list*">PROPAGATION_REQUIRED, readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED, readOnly</prop>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<list>
+				<value>*Service</value>
+			</list>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>transactionInterceptor</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean
+		class="org.springframework.transaction.interceptor.TransactionAttributeSourceAdvisor">
+		<property name="transactionInterceptor"
+			ref="transactionInterceptor" />
+	</bean>
+
+	<!-- Spring提供的iBatis的SqlMap配置-->
+	<bean id="sqlMapClient"
+		class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation"
+			value="classpath:/SqlMapConfig.xml" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- ibatis Template for injection  -->
+	<bean id="ibatisTemplate"
+		class="org.springframework.orm.ibatis.SqlMapClientTemplate">
+		<property name="sqlMapClient" ref="sqlMapClient" />
+	</bean>
+
+
+</beans>

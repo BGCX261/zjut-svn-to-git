@@ -1,0 +1,9 @@
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.1.1//EN" "http://www.opensymphony.com/xwork/xwork-1.1.1.dtd">
+<xwork>
+	
+	<include file="webwork-default.xml"/>
+	<include file="webwork/xwork-framework.xml"/>
+	<include file="webwork/xwork-webapp-sandbox.xml"/>
+	<include file="webwork/xwork-dmp-login.xml"/>
+	
+</xwork>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap          
+PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"          
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="dmp-agent-user">
+
+	<!-- 定义别名 -->
+	<typeAlias alias="agentUser" type="com.zjut.yout.channel.model.AgentUser" />
+	<typeAlias alias="adminUser" type="com.zjut.yout.channel.model.AdminUser" />
+
+	<select id="getAgentUserByCondition" parameterClass="agentUser" resultClass="agentUser">
+		select dau.agent_user_id as agentUserId,
+		       dau.user_name     as userName,
+		       dau.email         as email
+		  from dmp_agent_user dau
+		 where 1=1   
+		  <isNotEmpty property="userName" >
+		  	and dau.user_name = #userName#
+		  </isNotEmpty>
+		  <isNotEmpty property="password" >
+		  	and dau.password = #password#
+		  </isNotEmpty>
+	</select>
+
+	<select id="getAgentUserById" parameterClass="string" resultClass="agentUser">
+		select dau.agent_user_id as agentUserId,
+		       dau.user_name     as userName,
+		       dau.email         as email
+		  from dmp_agent_user dau
+		 where dau.agent_user_id = #agentUserId#
+	</select>
+
+	<update id="updateAgentUser" parameterClass="agentUser">
+		 update dmp_agent_user dau
+		    set dau.user_name = #userName#
+		  where dau.agent_user_id = #agentUserId#
+	</update>
+
+</sqlMap>

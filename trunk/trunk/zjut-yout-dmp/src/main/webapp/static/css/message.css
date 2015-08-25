@@ -1,0 +1,28 @@
+body {
+    font-size: 12px; 
+}
+#outmessage_false{
+	color: #666666;
+	text-align:left;
+	background: url(../images/error_01.gif) no-repeat left top;
+	padding:10px 10px 10px 80px;
+	width:auto;
+}
+#outmessage_false .boldtext{
+	font-size:14px;
+	color: #F1552B;
+	font-weight: bold;
+}
+
+#outmessage_ok{
+	color: #666666;
+	width:auto;
+	text-align:left;
+	background: url(../images/ok_01.gif) no-repeat left top;
+	padding:10px 10px 10px 80px;
+}
+#outmessage_ok .boldtext{
+	font-size:14px;
+	color: #F1552B;
+	font-weight: bold;
+}
